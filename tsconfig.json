@@ -8,10 +8,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@capacitor/android": "^3.1.1",
-    "@capacitor/cli": "^3.1.1",
-    "@capacitor/core": "^3.1.1",
-    "@nagoos/vue-image-picker": "^1.0.4",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
@@ -25,18 +21,12 @@
     "env": {
       "es6": true
     },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
+    "extends": ["plugin:vue/essential", "eslint:recommended"],
     "rules": {
       "no-unused-vars": "off",
       "eqeqeq": "off",
       "curly": "error",
-      "quotes": [
-        "error",
-        "double"
-      ]
+      "quotes": ["error", "double"]
     },
     "parserOptions": {
       "ecmaVersion": 7,

@@ -1,0 +1,10 @@
+{
+    "no_layout": [
+        "",
+        "/"
+    ],
+    "protected_pages": [
+        "admin",
+        "/"
+    ]
+}

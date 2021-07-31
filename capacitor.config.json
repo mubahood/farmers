@@ -1,0 +1,6 @@
+{
+  "appId": "ugnews24.info",
+  "appName": "app3",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
