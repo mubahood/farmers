@@ -52,7 +52,7 @@
             <v-divider></v-divider>
             <v-card-text class="pl-0 pr-0">
               <v-container class=" pl-0 pr-0">
-                <v-form v-model="valid">
+                <v-form id="new_farmer" v-model="valid">
                   <v-card class="mx-auto pl-5 pt-5 pr-5 pb-5" outlined>
                     <v-list-item-title class="text-h6  mb-4">
                       Bio data
@@ -311,7 +311,7 @@
   </div>
 </template>
 <script>
-import ApiService from "../store/api.service";
+import _axios from "../store/axiosApi";
 export default {
   mounted() {
     this.$store.dispatch("get_farmers");
@@ -332,32 +332,32 @@ export default {
     my_done() {
       this.loading = false;
       this.dialog = false;
+      this.sheet = false; 
+      document.getElementById("new_farmer").reset();
+
     },
     submit_data() {
       this.loading = true;
-      ApiService.get("Default.aspx", this.my_form)
-        //ApiService.query("test.php", this.my_form)
+      //ApiService.get("/", this.my_form)
+        _axios.get("", {
+          params: this.my_form})
         .then((res) => {
-          console.log(res.data);
           this.loading = false;
-          if (typeof res == "undefined") {
-            this.message = "Failed to submit form, please try again.";
-            this.success = false;
+          if(res.data == "success"){
+            this.success = true;
+            this.message = "New farmer was added successfully!";
             this.dialog = true;
             return;
           }
-          if (typeof res.data == "undefined") {
-            this.message = "Failed to submit form, please try again.";
             this.success = false;
+            this.message = "Something went wrong while adding new farmer.";
             this.dialog = true;
             return;
-          }
-          this.success = true;
-          this.message = res;
-          this.dialog = true;
         })
         .catch((err) => {
-          console.log("err");
+          this.loading = false
+          alert("Failed because "+err)
+          console.log(err);
           alert("Failed!");
         });
     },
@@ -367,19 +367,20 @@ export default {
       dialog: false,
       message: "",
       my_form: {
-        DataFormat: "NewFarmer",
-        enteredby: "John Doe",
-        comment: "Simple comment",
-        village: "Village",
-        subcounty: "Bwera",
-        county: "Bukonzo",
-        district: "Kasese",
-        group: "none",
-        phone: "+25670365273",
-        Feduc: "None",
-        maritalS: "SINGLE",
-        FName: "Muhindo",
-        SName: "Mubaraka",
+        Action: "add_new_farmer",
+        DataFormat: "",
+        enteredby: "",
+        comment: "",
+        village: "",
+        subcounty: "",
+        county: "",
+        district: "",
+        group: "",
+        phone: "",
+        Feduc: "",
+        maritalS: "",
+        FName: "",
+        SName: "",
         Sex: "Male",
         DOB: "1994-08-18",
       },

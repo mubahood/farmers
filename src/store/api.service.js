@@ -4,12 +4,11 @@ import VueAxios from "vue-axios";
 
 /**
  * Service to call HTTP request via Axios
- *very last change
  */
 const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
-     Vue.axios.defaults.baseURL = "http://api.holidaytrekkers.com/";
+     Vue.axios.defaults.baseURL = "http://196.43.152.10/COOPERP/Mobile/";
     //Vue.axios.defaults.baseURL = "http://localhost:8080/amry/";
   },
 

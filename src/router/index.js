@@ -42,7 +42,7 @@ const router = new VueRouter({
     {
       path: "/admin",
       name: "admin",
-      component: () => import("../pages/Admin.vue"),
+      component: () => import("../pages/Farmers.vue"),
     },
     {
       path: "/addform",

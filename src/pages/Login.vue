@@ -66,10 +66,10 @@
           color="white"
           class="mb-0"
         ></v-progress-linear>
-<v-card-actions>
+        <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="green darken-1" text @click="my_done">
-            Ok...
+            Ok
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -79,22 +79,25 @@
 
 <script>
 export default {
-    watch: {
+  watch: {
     $route(to, from) {
       this.show = false;
     },
   },
-  created(){
-    this.$store.dispatch("is_logged_in").then((data)=>{
-      if(typeof data == "undefined" ){
-        return
-      }
-      if(data){
-        this.$router.push({ name: "admin" })
-      }
-    }).catch(()=>{
-      alert("Failed....")
-    })
+  created() {
+    this.$store
+      .dispatch("is_logged_in")
+      .then((data) => {
+        if (typeof data == null) {
+          return;
+        }
+        if (data) {
+          this.$router.push({ name: "admin" });
+        }
+      })
+      .catch(() => {
+        alert("Failed....");
+      });
   },
   data: function() {
     return {
@@ -103,13 +106,13 @@ export default {
       dialog: false,
       message: "",
       valid: true,
-      password: "romina",
+      password: "4321",
       nameRules: [
         (v) => !!v || "Password is required",
         (v) =>
           (v && v.length <= 35) || "Password must be less than 35 characters",
       ],
-      email: "mubs0x@gmail.com",
+      email: "admin@gmail.com",
       emailRules: [
         (v) => !!v || "E-mail is required",
         (v) => /.+@.+\..+/.test(v) || "Invalid E-mail",
@@ -119,14 +122,14 @@ export default {
   },
 
   methods: {
-    my_done(){ 
-      this.dialog = false
-      if(this.success){
-        this.$router.push({ path: "/admin" })
-      } 
+    my_done() {
+      this.dialog = false;
+      if (this.success) {
+        this.$router.push({ path: "/admin" });
+      }
     },
     submit_data: (context) => {
-      context.success = false
+      context.success = false;
       if (context.loading) {
         return;
       }
@@ -134,26 +137,26 @@ export default {
       const form_data = {
         email: context.email,
         password: context.password,
+        Action: "login",
       };
-      context.$store.dispatch("login_user", form_data).then(function(data) {
-        if (typeof data == "undefined") {
+      context.$store.dispatch("login_user", form_data)
+      .then(function(data) {
+        if (typeof data == null) {
           context.message = "Invalid response.";
           context.dialog = true;
           context.loading = false;
           return;
         }
-        if (typeof data.code == "undefined") {
+        if (
+          typeof data.email == "undefined" ||
+          typeof data.user_id == "undefined" ||
+          typeof data.first_name == "undefined" 
+          ) {
           context.loading = false;
           context.dialog = true;
-          context.message = "Invalid response code.";
+          context.message = "You entered wrong email or password.";
           return;
-        }
-        if (data.code == 0) {
-          context.loading = false;
-          context.dialog = true;
-          context.message = data.message;
-          return;
-        }
+        } 
         context.loading = false;
         context.dialog = true;
         context.success = true;
@@ -165,9 +168,9 @@ export default {
           context.dialog = true;
           context.message = "Failed. Check your connection and try again.";
           return;
-        });
+        }); 
     },
-    
+
     validate() {
       this.submit_data(this);
       if (this.$refs.form.validate()) {
